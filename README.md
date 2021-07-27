@@ -107,7 +107,7 @@ Creates a new event hook for the specified webhook.
 2. Event Hook Name (String) **Required** - The name of the new event hook.
 3. Webhook URL (String) **Required** - The URL of the webhook to send all the events data to.
 4. Secret (Vault) **Optional** - The value to attach as the token for the HTTP authorazation header in the requests sent to the webhook. If not specified, uses API token.
-5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object fron code.
+5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object from code.
 6. Active (Boolean) **Optional** - If specified, activate the new event hook.
 
 ## Method: Event Hook Action
