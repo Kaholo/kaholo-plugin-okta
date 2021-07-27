@@ -1,5 +1,5 @@
 # kaholo-plugin-okta
-Kaholo plugin for integration with Okta API.
+Kaholo plugin for integration with [Okta API](https://developer.okta.com/docs/reference/core-okta-api/).
 
 ## Settings
 1. Okta Org URL (String) **Required** - The URL of the Okta Org to make all requests to. For example **https://example.okta.com/** .
