@@ -319,10 +319,18 @@
                 },
                 {
                     "name":"groups",
-                    "viewName": "Groups",
+                    "viewName": "Assigned Groups",
                     "type": "autocomplete",
                     "autocompleteType":"function",
                     "functionName":"listGroups"
+                },
+                {
+                    "name":"apps",
+                    "viewName": "Assigned Applications",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listApps",
+                    "required": true
                 }
             ]
         },
@@ -381,10 +389,18 @@
                 },
                 {
                     "name":"users",
-                    "viewName": "Users",
+                    "viewName": "Assigned Users",
                     "type": "autocomplete",
                     "autocompleteType":"function",
                     "functionName":"listUsers"
+                },
+                {
+                    "name":"apps",
+                    "viewName": "Assigned Applications",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listApps",
+                    "required": true
                 }
             ]
         },
@@ -441,12 +457,12 @@
             ]
         },
         {
-            "name":"assignToApp",
-            "viewName":"Assign Users/Groups To Application",
+            "name":"assignToApps",
+            "viewName":"Assign Users/Groups To Applications",
             "params":[
                 {
-                    "name":"app",
-                    "viewName": "Application",
+                    "name":"apps",
+                    "viewName": "Applications",
                     "type": "autocomplete",
                     "autocompleteType":"function",
                     "functionName":"listApps",
