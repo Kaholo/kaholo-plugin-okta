@@ -1,0 +1,569 @@
+{
+    "name": "Okta",
+    "type": "executer",
+    "execProgram": "node",
+    "main": "app.js",
+    "exposeRoute": true,
+    "imgUrl": "logo.png",
+    "version": "1.0.0",
+    "description": "Integration with Okta API",
+    "settings": [
+        {
+            "name":"orgUrl",
+            "viewName":"Okta Org URL",
+            "type":"string",
+            "required": true
+        },
+        {
+            "name":"token",
+            "viewName":"API Token",
+            "type":"vault",
+            "required": true
+        }
+    ],
+    "methods":[
+        {
+            "name":"createSamlApp",
+            "viewName":"Create SAML 2.0 Application",
+            "params":[
+                {
+                    "name":"label",
+                    "viewName": "App Label",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"ssoUrl",
+                    "viewName": "Single Sign On(SSO) URL",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"recipient",
+                    "viewName": "Recipient URL",
+                    "type":"string"
+                },
+                {
+                    "name":"destination",
+                    "viewName": "Destination URL",
+                    "type":"string"
+                },
+                {
+                    "name":"audienceURI",
+                    "viewName": "Audience URI (SP Entity ID)",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"defRelayState",
+                    "viewName": "Default RelayState",
+                    "type":"string"
+                },
+                {
+                    "name":"nameIdFormat",
+                    "viewName": "Name ID Format",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
+                            "name": "Unspecified"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+                            "name": "EmailAddress"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:1.1:nameid-format:x509SubjectName",
+                            "name": "x509SubjectName"
+                        },  
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
+                            "name": "Persistent"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:nameid-format:transient",
+                            "name": "Transient"
+                        }
+                    ],
+                    "defaultValue": {
+                        "id": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+                        "name": "EmailAddress"
+                    }
+                },
+                {
+                    "name":"appUsername",
+                    "viewName": "Application Username",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "None",
+                            "name": "None"
+                        },
+                        {
+                            "id": "login",
+                            "name": "Okta Username"
+                        },
+                        {
+                            "id": "email",
+                            "name": "Email"
+                        },
+                        {
+                            "id": "Custom",
+                            "name": "Custom"
+                        }
+                    ],
+                    "defaultValue": {
+                        "id": "None",
+                        "name": "None"
+                    }
+                },
+                {
+                    "name":"customRule",
+                    "viewName": "Custom Username Rule",
+                    "type":"string"
+                },
+                {
+                    "name":"attributeStats",
+                    "viewName": "Attribute Statements(Array of Objects)",
+                    "type":"string"
+                },
+                {
+                    "name":"groups",
+                    "viewName": "Assigned Groups",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listGroups"
+                },
+                {
+                    "name":"users",
+                    "viewName": "Assigned Users",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listUsers"
+                },
+                {
+                    "name":"resNotSigned",
+                    "viewName": "Response Not Signed",
+                    "type":"boolean"
+                },
+                {
+                    "name":"assertionNotSigned",
+                    "viewName": "Assertion Not Signed",
+                    "type":"boolean"
+                },
+                {
+                    "name":"sigAlgo",
+                    "viewName": "Signature Algorithm",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "RSA_SHA256",
+                            "name": "RSA-SHA256"
+                        },
+                        {
+                            "id": "RSA_SHA1",
+                            "name": "RSA-SHA1"
+                        }
+                    ],
+                    "defaultValue": {
+                        "id": "RSA_SHA256",
+                        "name": "RSA-SHA256"
+                    }
+                },
+                {
+                    "name":"digestAlgo",
+                    "viewName": "Digest Algorithm",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "SHA256",
+                            "name": "SHA256"
+                        },
+                        {
+                            "id": "SHA1",
+                            "name": "SHA1"
+                        }
+                    ],
+                    "defaultValue": {
+                        "id": "SHA256",
+                        "name": "SHA256"
+                    }
+                },
+                {
+                    "name":"noHonorForceAuth",
+                    "viewName": "No Honor Force Authentication",
+                    "type":"boolean"
+                },
+                {
+                    "name":"authContext",
+                    "viewName": "Authentication Context Class",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
+                            "name": "PasswordProtectedTransport"
+                        },
+                        {
+                            "id": "urn:federation:authentication:windows",
+                            "name": "Integrated Windows Authentication"
+                        },
+                        {
+                            "id": "oasis:names:tc:SAML:2.0:ac:classes:Kerberos",
+                            "name": "Kerberos"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:Password",
+                            "name": "Password"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient",
+                            "name": "TLS Client"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified",
+                            "name": "Unspecified"
+                        },
+                        {
+                            "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:X509",
+                            "name": "X509 Certificate"
+                        }
+                    ],
+                    "defaultValue": {
+                        "id": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport",
+                        "name": "PasswordProtectedTransport"
+                    }
+                },
+                {
+                    "name":"idpIssuer",
+                    "viewName": "SAML Issuer ID",
+                    "type":"string",
+                    "defaultValue": "http://www.okta.com/${org.externalKey}"
+                }
+            ]
+        },
+        {
+            "name":"appAction",
+            "viewName":"Application Action",
+            "params":[
+                {
+                    "name":"apps",
+                    "viewName": "Applications",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listApps",
+                    "required": true
+                },
+                {
+                    "name":"action",
+                    "viewName": "Action",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "Get",
+                            "name": "Get"
+                        },
+                        {
+                            "id": "Activate",
+                            "name": "Activate"
+                        },
+                        {
+                            "id": "Deactivate",
+                            "name": "Deactivate"
+                        },
+                        {
+                            "id": "Delete",
+                            "name": "Delete"
+                        }
+                    ],
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name":"createUser",
+            "viewName":"Create User",
+            "params":[
+                {
+                    "name":"firstName",
+                    "viewName": "First Name",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"lastName",
+                    "viewName": "Last Name",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"email",
+                    "viewName": "Email",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"login",
+                    "viewName": "Login",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"mobilePhone",
+                    "viewName": "Mobile Phone",
+                    "type":"string"
+                },
+                {
+                    "name":"password",
+                    "viewName": "Password",
+                    "type":"vault"
+                },
+                {
+                    "name":"groups",
+                    "viewName": "Groups",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listGroups"
+                }
+            ]
+        },
+        {
+            "name":"userAction",
+            "viewName":"User Action",
+            "params":[
+                {
+                    "name":"users",
+                    "viewName": "Users",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listUsers",
+                    "required": true
+                },
+                {
+                    "name":"action",
+                    "viewName": "Action",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "Get",
+                            "name": "Get"
+                        },
+                        {
+                            "id": "Activate",
+                            "name": "Activate"
+                        },
+                        {
+                            "id": "Deactivate",
+                            "name": "Deactivate"
+                        },
+                        {
+                            "id": "Delete",
+                            "name": "Delete"
+                        }
+                    ],
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name":"createGroup",
+            "viewName":"Create Group",
+            "params":[
+                {
+                    "name":"name",
+                    "viewName": "Name",
+                    "type":"string",
+                    "required": true
+                },
+                {
+                    "name":"description",
+                    "viewName": "Description",
+                    "type":"text"
+                },
+                {
+                    "name":"users",
+                    "viewName": "Users",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listUsers"
+                }
+            ]
+        },
+        {
+            "name":"groupAction",
+            "viewName":"Group Action",
+            "params":[
+                {
+                    "name":"groups",
+                    "viewName": "Groups",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listGroups",
+                    "required": true
+                },
+                {
+                    "name":"action",
+                    "viewName": "Action",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "Get",
+                            "name": "Get"
+                        },
+                        {
+                            "id": "Delete",
+                            "name": "Delete"
+                        }
+                    ],
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name":"addUsersToGroups",
+            "viewName":"Add Users To Group",
+            "params":[
+                {
+                    "name":"groups",
+                    "viewName": "Groups",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listGroups",
+                    "required": true
+                },
+                {
+                    "name":"users",
+                    "viewName": "Users",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listUsers",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name":"assignToApp",
+            "viewName":"Assign Users/Groups To Application",
+            "params":[
+                {
+                    "name":"app",
+                    "viewName": "Application",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listApps",
+                    "required": true
+                },
+                {
+                    "name":"groups",
+                    "viewName": "Groups",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listGroups"
+                },
+                {
+                    "name":"users",
+                    "viewName": "Users",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listUsers"
+                }
+            ]
+        },
+        {
+            "name":"getSystemLogs",
+            "viewName":"Get System Logs",
+            "params":[
+                {
+                    "name":"since",
+                    "viewName": "Since",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getDateTime",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name":"createEventHook",
+            "viewName":"Create Event Hook",
+            "params":[
+                {
+                    "name":"events",
+                    "viewName": "Events",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listEventTypes",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "viewName": "Event Hook Name",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "url",
+                    "viewName": "Webhook URL",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "secret",
+                    "viewName": "Secret",
+                    "type": "vault"
+                },
+                {
+                    "name": "headers",
+                    "viewName": "HTTP Headers",
+                    "type": "text"
+                },
+                {
+                    "name": "active",
+                    "viewName": "Active",
+                    "type": "boolean"
+                }
+            ]
+        },
+        {
+            "name":"eventHookAction",
+            "viewName":"Event Hook Action",
+            "params":[
+                {
+                    "name":"eventHook",
+                    "viewName": "Event Hook",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listEventHooks",
+                    "required": true
+                },
+                {
+                    "name":"action",
+                    "viewName": "Action",
+                    "type":"options",
+                    "options": [
+                        {
+                            "id": "Get",
+                            "name": "Get"
+                        },
+                        {
+                            "id": "Activate",
+                            "name": "Activate"
+                        },
+                        {
+                            "id": "Deactivate",
+                            "name": "Deactivate"
+                        },
+                        {
+                            "id": "Verify",
+                            "name": "Verify"
+                        },
+                        {
+                            "id": "Delete",
+                            "name": "Delete"
+                        }
+                    ],
+                    "required": true
+                }
+            ]
+        }
+    ]
+}
