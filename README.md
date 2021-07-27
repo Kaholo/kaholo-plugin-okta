@@ -8,7 +8,7 @@ Kaholo plugin for integration with Okta API.
 ## Method: Create SAML 2.0 Application
 Creates a new SAML 2.0 Application.
 
-## Parameters
+### Parameters
 1. App Label (String) **Required** - The label of the new app.
 2. Single Sign On(SSO) URL (String) **Required** - The Single Sign-On URL for SAML.
 3. Recipient URL (String) **Optional** - The location where the app may present the SAML assertion. **Default value is the SSO URL.**
@@ -23,7 +23,7 @@ Default value is None.
 10. Attribute Statements (Array of Objects) **Optional** - Specifies optional attribute statements for a SAML application. Check [this documentation](https://developer.okta.com/docs/reference/api/apps/#attribute-statements-object) to see the format of the object to provide, or the [SAML Technical Overview](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html) for more info on SAML attributes.
 11. Assigned Groups (Autocomplete/Array) **Optional** - If specified, assign the specified groups to this application. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 12. Assigned Users (Autocomplete/Array) **Optional** - If specified, assign the specified users to this application. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
-### Advanced Parameters
+#### Advanced Parameters
 13. Response Not Signed (Boolean) **Optional** - Determines whether the SAML authentication response message is digitally signed by the IDP or not. Please Notice Default value is false which means **on default, the response is signed**.
 14. Assertion Not Signed (Boolean) **Optional** - 	Determines whether the SAML assertion is digitally signed or not. Please Notice Default value is false which means **on default, the assertion is signed**.
 15. Signature Algorithm (Options) **Optional** - Determines the signing algorithm used to digitally sign the SAML assertion and response. Possible values: RSA-SHA256 | RSA-SHA1.
@@ -38,14 +38,14 @@ Default value is PasswordProtectedTransport.
 ## Method: Application Action
 Run the specified action on the specified application(s).
 
-## Parameters
+### Parameters
 1. Applications (Autocomplete/Array) **Required** - The application(s) to run the action on. Can be provided either as a single application chosen from Autocomplete dropdown menu, or passed as an array of the applications IDs from code.
 2. Action (Options) **Required** - The action to run on the specified application(s). Possible values: **Get | Activate | Deactivate | Delete**.
 
 ## Method: Create User
 Create a new User. If specified, assign to the specified groups or applications.
 
-## Parameters
+### Parameters
 1. First Name (String) **Required** - The first name of the user. 
 2. Last Name (String) **Required** - The last name of the user.
 3. Email (String) **Required** - The main email address of the user.
@@ -58,14 +58,14 @@ Create a new User. If specified, assign to the specified groups or applications.
 ## Method: User Action
 Run the specified action on the specified user(s).
 
-## Parameters
+### Parameters
 1. Users (Autocomplete/Array) **Required** - The user(s) to run the action on. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
 2. Action (Options) **Required** - The action to run on the specified user(s). Possible values: Get | Activate | Deactivate | Delete
 
 ## Method: Create Group
 Create a new group.
 
-## Parameters
+### Parameters
 1. Name (String) **Required** - The name of the new group.
 2. Description (Text) **Optional** - Description of the new group.
 3. Assigned Users (Autocomplete/Array) **Optional** - If specified, assign the specified users to this group. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
@@ -74,21 +74,21 @@ Create a new group.
 ## Method: Group Action
 Run the specified action on the specified group(s).
 
-## Parameters
+### Parameters
 1. Groups (Autocomplete/Array) **Required** - The group(s) to run the action on. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 2. Action (Options) **Required** - Possible values: Get | Delete.
 
 ## Method: Add Users To Groups
 Adds the specified user(s) to the specified group(s).
 
-## Parameters
+### Parameters
 1. Groups (Autocomplete/Array) **Required** - The group(s) to assign all specified users to. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 2. Users (Autocomplete/Array) **Required** - The user(s) to assign to all the specified users. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
 
 ## Method: Assign Users/Groups To Applications
 Assign the specified users and groups to the specified application.
 
-## Parameters
+### Parameters
 1. Applications (Autocomplete) **Required** - The application(s) to assign the users or groups to. Can be provided either as a single application chosen from Autocomplete dropdown menu, or passed as an array of the applications IDs from code.
 2. Groups (Autocomplete/Array) **Optional** - If specified, assign the provided group(s) to the specified application. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 3. Users (Autocomplete/Array) **Optional** - If specified, assign the provided user(s) to the specified applications. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
@@ -96,24 +96,24 @@ Assign the specified users and groups to the specified application.
 ## Method: Get System Logs
 Get Okta system logs since the date and time specified, until now.
 
-## Parameters
+### Parameters
 1. Since (Autocomplete) **Required** - The date and time to get the logs from.
 
 ## Method: Create Event Hook
 Creates a new event hook for the specified webhook.
 
-## Parameters
+### Parameters
 1. Events (Autocomplete/Array) **Required** - The events to send to the specified webhook. Can be provided either as a single events chosen from Autocomplete dropdown menu, or passed as an array of events from code.
 2. Event Hook Name (String) **Required** - The name of the new event hook.
 3. Webhook URL (String) **Required** - The URL of the webhook to send all the events data to.
 4. Secret (Vault) **Optional** - The value to attach as the token for the HTTP authorazation header in the requests sent to the webhook. If not specified, uses API token.
-5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object fron code.
+5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object from code.
 6. Active (Boolean) **Optional** - If specified, activate the new event hook.
 
 ## Method: Event Hook Action
 Runs the specified action on the specified event hook.
 
-## Parameters
+### Parameters
 1. Event Hook (Autocomplete) **Required** - The event hook to run the specified action on.
 2. Action (Options) **Required** - The action to run on the specified event. Possible values: Get | Activate | Deactivate | Verify | Delete
 
