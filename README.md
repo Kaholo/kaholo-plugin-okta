@@ -85,11 +85,11 @@ Adds the specified user(s) to the specified group(s).
 1. Groups (Autocomplete/Array) **Required** - The group(s) to assign all specified users to. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 2. Users (Autocomplete/Array) **Required** - The user(s) to assign to all the specified users. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
 
-## Method: Assign Users/Groups To Application
+## Method: Assign Users/Groups To Applications
 Assign the specified users and groups to the specified application.
 
 ## Parameters
-1. Application (Autocomplete) **Required** - The application to assign the users or groups to.
+1. Applications (Autocomplete) **Required** - The application(s) to assign the users or groups to. Can be provided either as a single application chosen from Autocomplete dropdown menu, or passed as an array of the applications IDs from code.
 2. Groups (Autocomplete/Array) **Optional** - If specified, assign the provided group(s) to the specified application. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
 3. Users (Autocomplete/Array) **Optional** - If specified, assign the provided user(s) to the specified applications. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
 

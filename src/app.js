@@ -53,7 +53,7 @@ async function createSamlApp(action, settings){
     if (groups || users){
         try {
             action.params.apps = [result.id];
-            await assignToApp(action, settings);
+            await assignToApps(action, settings);
             return (await appAction(action, settings, "Get"))[0];
         }
         catch(err){
@@ -89,7 +89,7 @@ async function appAction(action, settings, overrideAction){
 
 async function createUser(action, settings){
     const client = getClient(settings);
-    const { firstName, lastName, email, login, mobilePhone, password, groups} = action.params;
+    const { firstName, lastName, email, login, mobilePhone, password, groups, apps} = action.params;
     const result = await client.createUser({
         profile: {
             firstName: parsers.string(firstName),
@@ -102,16 +102,32 @@ async function createUser(action, settings){
             password : { value: password }
           }
     });
+    
+    action.params.users = [result.id];
     if (groups){
         try {
-            action.params.users = [result.id];
             await addUsersToGroups(action, settings);
-            return (await userAction(action, settings, "Get"))[0];
         }
         catch(err){
             await result.delete();
             throw err;
         }
+    }
+    if (apps){
+        try {
+            action.params.groups = undefined;
+            await assignToApps(action, settings);
+        }
+        catch(err){
+            await result.delete();
+            throw err;
+        }
+    }
+    if (apps || groups){
+        try {
+            return (await userAction(action, settings, "Get"))[0];
+        }
+        catch(err){}
     }
     return result;
 }
@@ -139,23 +155,39 @@ async function userAction(action, settings, overrideAction){
 
 async function createGroup(action, settings){
     const client = getClient(settings);
-    const { name, description, users } = action.params;
+    const { name, description, users, apps } = action.params;
     const result = await client.createGroup({
         profile: {
             name: parsers.string(name),
             description: parsers.string(description)
         }
     })
+    action.params.groups = [result.id];
     if (users){
         try {
-            action.params.groups = [result.id];
             await addUsersToGroups(action, settings);
-            return (await groupAction(action, settings, "Get"))[0];
+            
         }
         catch(err){
             await result.delete();
             throw err;
         }
+    }
+    if (apps){
+        try {
+            action.params.users = undefined;
+            await assignToApps(action, settings);
+        }
+        catch(err){
+            await result.delete();
+            throw err;
+        }
+    }
+    if (users || apps) {
+        try {
+            return (await groupAction(action, settings, "Get"))[0];
+        }
+        catch(err){}
     }
     return result;
 }
@@ -188,19 +220,21 @@ async function addUsersToGroups(action, settings){
     return Promise.all(promises);
 }
 
-async function assignToApp(action, settings){
+async function assignToApps(action, settings){
     const client = getClient(settings);
-    const app = parsers.autocomplete(action.params.app);
+    const apps = parsers.autocompleteOrArray(action.params.apps);
 	const groups = parsers.autocompleteOrArray(action.params.groups);
 	const users = parsers.autocompleteOrArray(action.params.users);
-    let promises = [];
-    if (groups.length == 0 && users.length == 0) throw "One of the required Parameters was not given";
-    if (groups.length > 0){
-        promises = groups.map(groupId => client.createApplicationGroupAssignment(app, groupId));
-    }
-    if (users.length > 0){
-        promises.concat(users.map(userId => client.assignUserToApplication(app, {id: userId})));
-    }
+    if (apps.length == 0 || (groups.length == 0 && users.length == 0)){
+        throw "One of the required Parameters was not given";
+    } 
+    let promises = apps.map(app =>
+        groups.map(groupId => 
+            client.createApplicationGroupAssignment(app, groupId)   
+        ).concat(users.map(userId => 
+            client.assignUserToApplication(app, {id: userId})
+        ))
+    );
     return Promise.all(promises);
 }
 
@@ -277,7 +311,7 @@ module.exports = {
 	createGroup,
 	groupAction,
 	addUsersToGroups,
-	assignToApp,
+	assignToApps,
 	getSystemLogs,
 	createEventHook,
 	eventHookAction,
