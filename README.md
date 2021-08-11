@@ -15,9 +15,9 @@ Creates a new SAML 2.0 Application.
 4. Destination URL (String) **Optional** - Identifies the location where the SAML response is intended to be sent inside of the SAML assertion. **Default value is the SSO URL.**
 5. Audience URI (SP Entity ID) (String) **Required** - The Audience URI (SP Entity ID) for SAML.
 6. Default RelayState (String) **Optional** - Identifies a specific application resource in an IDP-initiated SSO scenario.
-7. Name ID Format (Options) **Optional** - Identifies the SAML processing rules. Possible values: Unspecified | EmailAddress | x509SubjectName | Persistent | Transient.
+7. Name ID Format (Options) **Optional** - Identifies the SAML processing rules. Possible values: **Unspecified | EmailAddress | x509SubjectName | Persistent | Transient**.
 Default value is EmailAddress.
-8. Application Username (Options) **Optional** - Template for app user's username when a user is assigned to the app. Possible values: None | Okta Username | Email | Custom.
+8. Application Username (Options) **Optional** - Template for app user's username when a user is assigned to the app. Possible values: **None | Okta Username | Email | Custom**.
 Default value is None.
 9. Custom Username Rule (String) **Optional** - In case Custom Application Username was selected, specify the custom rule for the username here.
 10. Attribute Statements (Array of Objects) **Optional** - Specifies optional attribute statements for a SAML application. Check [this documentation](https://developer.okta.com/docs/reference/api/apps/#attribute-statements-object) to see the format of the object to provide, or the [SAML Technical Overview](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html) for more info on SAML attributes.
@@ -26,12 +26,12 @@ Default value is None.
 #### Advanced Parameters
 13. Response Not Signed (Boolean) **Optional** - Determines whether the SAML authentication response message is digitally signed by the IDP or not. Please Notice Default value is false which means **on default, the response is signed**.
 14. Assertion Not Signed (Boolean) **Optional** - 	Determines whether the SAML assertion is digitally signed or not. Please Notice Default value is false which means **on default, the assertion is signed**.
-15. Signature Algorithm (Options) **Optional** - Determines the signing algorithm used to digitally sign the SAML assertion and response. Possible values: RSA-SHA256 | RSA-SHA1.
+15. Signature Algorithm (Options) **Optional** - Determines the signing algorithm used to digitally sign the SAML assertion and response. Possible values: **RSA-SHA256 | RSA-SHA1**.
 Default value is RSA-SHA256.
-16. Digest Algorithm (Options) **Optional** - Determines the digest algorithm used to digitally sign the SAML assertion and response. Possible values: SHA256 | SHA1.
+16. Digest Algorithm (Options) **Optional** - Determines the digest algorithm used to digitally sign the SAML assertion and response. Possible values: **SHA256 | SHA1**.
 Default value is SHA256.
 17. No Honor Force Authentication (Boolean) **Optional** - If true, don't prompt user to re-authenticate if SP asks for it. If false, prompt user to re-authenticate.
-18. Authentication Context Class (Options) **Optional** - Identifies the SAML authentication context class for the assertion's authentication statement. Possible values: PasswordProtectedTransport | Integrated Windows Authentication | Kerberos | Password | TLS Client | Unspecified | X509 Certificate.
+18. Authentication Context Class (Options) **Optional** - Identifies the SAML authentication context class for the assertion's authentication statement. Possible values: **PasswordProtectedTransport | Integrated Windows Authentication | Kerberos | Password | TLS Client | Unspecified | X509 Certificate**.
 Default value is PasswordProtectedTransport.
 19. SAML Issuer ID (String) **Optional** - Issuer ID for SAML. Default value is http://www.okta.com/${org.externalKey}.
 
@@ -60,7 +60,7 @@ Run the specified action on the specified user(s).
 
 ### Parameters
 1. Users (Autocomplete/Array) **Required** - The user(s) to run the action on. Can be provided either as a single user chosen from Autocomplete dropdown menu, or passed as an array of the users IDs from code.
-2. Action (Options) **Required** - The action to run on the specified user(s). Possible values: Get | Activate | Deactivate | Delete
+2. Action (Options) **Required** - The action to run on the specified user(s). Possible values: **Get | Activate | Deactivate | Delete**
 
 ## Method: Create Group
 Create a new group.
@@ -76,7 +76,7 @@ Run the specified action on the specified group(s).
 
 ### Parameters
 1. Groups (Autocomplete/Array) **Required** - The group(s) to run the action on. Can be provided either as a single group chosen from Autocomplete dropdown menu, or passed as an array of the groups IDs from code.
-2. Action (Options) **Required** - Possible values: Get | Delete.
+2. Action (Options) **Required** - Possible values: **Get | Delete**.
 
 ## Method: Add Users To Groups
 Adds the specified user(s) to the specified group(s).
@@ -100,7 +100,7 @@ Get Okta system logs since the date and time specified, until now.
 1. Since (Autocomplete) **Required** - The date and time to get the logs from.
 
 ## Method: Create Event Hook
-Creates a new event hook for the specified webhook.
+Creates a new event hook for the specified webhook, and sends a new
 
 ### Parameters
 1. Events (Autocomplete/Array) **Required** - The events to send to the specified webhook. Can be provided either as a single events chosen from Autocomplete dropdown menu, or passed as an array of events from code.
@@ -109,11 +109,13 @@ Creates a new event hook for the specified webhook.
 4. Secret (Vault) **Optional** - The value to attach as the token for the HTTP authorazation header in the requests sent to the webhook. If not specified, uses API token.
 5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object from code.
 6. Active (Boolean) **Optional** - If specified, activate the new event hook.
+7. Verify (Boolean) **Optional** - If specified, also send a verify event hook request after creating the hook.
+8. Delete Unverified (Boolean) **Optional** - **Only relevant if checked 'Verify' Parameter.** If specified, and the event hook wasn't verified successfully, than delete the new event hook.
 
 ## Method: Event Hook Action
 Runs the specified action on the specified event hook.
 
 ### Parameters
 1. Event Hook (Autocomplete) **Required** - The event hook to run the specified action on.
-2. Action (Options) **Required** - The action to run on the specified event. Possible values: Get | Activate | Deactivate | Verify | Delete
+2. Action (Options) **Required** - The action to run on the specified event. Possible values: **Get | Activate | Deactivate | Verify | Delete**
 

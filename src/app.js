@@ -25,7 +25,7 @@ async function createSamlApp(action, settings){
             }
         },
         settings: {
-            signOn: {
+            signOn: { 
                 ssoAcsUrl: ssoUrl,
                 recipient: parsers.string(recipient) || ssoUrl, 
                 destination: parsers.string(destination) || ssoUrl,
@@ -54,7 +54,6 @@ async function createSamlApp(action, settings){
         try {
             action.params.apps = [result.id];
             await assignToApps(action, settings);
-            return (await appAction(action, settings, "Get"))[0];
         }
         catch(err){
             await result.deactivate();
@@ -123,12 +122,6 @@ async function createUser(action, settings){
             throw err;
         }
     }
-    if (apps || groups){
-        try {
-            return (await userAction(action, settings, "Get"))[0];
-        }
-        catch(err){}
-    }
     return result;
 }
 
@@ -183,19 +176,13 @@ async function createGroup(action, settings){
             throw err;
         }
     }
-    if (users || apps) {
-        try {
-            return (await groupAction(action, settings, "Get"))[0];
-        }
-        catch(err){}
-    }
     return result;
 }
 
 async function groupAction(action, settings, overrideAction){
     const client = getClient(settings);
     const { action: actionType } = action.params;
-    const groups = parsers.autocompleteOrArray(action.params.group);
+    const groups = parsers.autocompleteOrArray(action.params.groups);
     const promises = groups.map(group => {
         switch (overrideAction || actionType){
             case "Get":
@@ -249,9 +236,9 @@ async function getSystemLogs(action, settings){
 
 async function createEventHook(action, settings){
     const client = getClient(settings);
-    const { url, active, name } = action.params;
-    const result = await client.createEventHook({
-        activate: active || false,
+    const { url, active, name, delUnverified, verify } = action.params;
+    const req = {
+        activate: parsers.boolean(active),
         name: parsers.string(name),
         events: {
             type: "EVENT_TYPE",
@@ -262,22 +249,23 @@ async function createEventHook(action, settings){
             version: "1.0.0",
             config: {
                 uri: url,
-                headers: parsers.object(action.params.headers) || {},
-                authScheme: {
-                    type: "HEADER",
-                    key: "Authorization",
-                    value: parsers.string(action.params.secret) || ""
-                }
+                headers: parsers.object(action.params.headers)
             }
         }
-    });
+    };
+    if (action.params.secret) req.channel.config.authScheme = {
+        type: "HEADER",
+        key: "Authorization",
+        value: parsers.string(action.params.secret)
+    }
+    const result = await client.createEventHook(req);
     try {
         action.params.eventHook = result.id;
-        await eventHookAction(action, settings, "Verify");
+        if (verify) await eventHookAction(action, settings, "Verify");
         return eventHookAction(action, settings, "Get");
     }
     catch (err){
-        await eventHookAction(action, settings, "Delete");
+        if (delUnverified) await eventHookAction(action, settings, "Delete");
         throw err;
     }
 }

@@ -5,7 +5,7 @@
     "main": "app.js",
     "exposeRoute": true,
     "imgUrl": "logo.png",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Integration with Okta API",
     "settings": [
         {
@@ -29,14 +29,12 @@
                 {
                     "name":"label",
                     "viewName": "App Label",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"ssoUrl",
                     "viewName": "Single Sign On(SSO) URL",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"recipient",
@@ -51,8 +49,7 @@
                 {
                     "name":"audienceURI",
                     "viewName": "Audience URI (SP Entity ID)",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"defRelayState",
@@ -250,8 +247,7 @@
                     "viewName": "Applications",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listApps",
-                    "required": true
+                    "functionName":"listApps"
                 },
                 {
                     "name":"action",
@@ -274,8 +270,7 @@
                             "id": "Delete",
                             "name": "Delete"
                         }
-                    ],
-                    "required": true
+                    ]
                 }
             ]
         },
@@ -286,26 +281,22 @@
                 {
                     "name":"firstName",
                     "viewName": "First Name",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"lastName",
                     "viewName": "Last Name",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"email",
                     "viewName": "Email",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"login",
                     "viewName": "Login",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"mobilePhone",
@@ -329,8 +320,7 @@
                     "viewName": "Assigned Applications",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listApps",
-                    "required": true
+                    "functionName":"listApps"
                 }
             ]
         },
@@ -343,8 +333,7 @@
                     "viewName": "Users",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listUsers",
-                    "required": true
+                    "functionName":"listUsers"
                 },
                 {
                     "name":"action",
@@ -367,8 +356,7 @@
                             "id": "Delete",
                             "name": "Delete"
                         }
-                    ],
-                    "required": true
+                    ]
                 }
             ]
         },
@@ -379,8 +367,7 @@
                 {
                     "name":"name",
                     "viewName": "Name",
-                    "type":"string",
-                    "required": true
+                    "type":"string"
                 },
                 {
                     "name":"description",
@@ -399,8 +386,7 @@
                     "viewName": "Assigned Applications",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listApps",
-                    "required": true
+                    "functionName":"listApps"
                 }
             ]
         },
@@ -413,8 +399,7 @@
                     "viewName": "Groups",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listGroups",
-                    "required": true
+                    "functionName":"listGroups"
                 },
                 {
                     "name":"action",
@@ -429,8 +414,7 @@
                             "id": "Delete",
                             "name": "Delete"
                         }
-                    ],
-                    "required": true
+                    ]
                 }
             ]
         },
@@ -443,16 +427,14 @@
                     "viewName": "Groups",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listGroups",
-                    "required": true
+                    "functionName":"listGroups"
                 },
                 {
                     "name":"users",
                     "viewName": "Users",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listUsers",
-                    "required": true
+                    "functionName":"listUsers"
                 }
             ]
         },
@@ -465,8 +447,7 @@
                     "viewName": "Applications",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listApps",
-                    "required": true
+                    "functionName":"listApps"
                 },
                 {
                     "name":"groups",
@@ -493,8 +474,7 @@
                     "viewName": "Since",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"getDateTime",
-                    "required": true
+                    "functionName":"getDateTime"
                 }
             ]
         },
@@ -507,20 +487,17 @@
                     "viewName": "Events",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listEventTypes",
-                    "required": true
+                    "functionName":"listEventTypes"
                 },
                 {
                     "name": "name",
                     "viewName": "Event Hook Name",
-                    "type": "string",
-                    "required": true
+                    "type": "string"
                 },
                 {
                     "name": "url",
                     "viewName": "Webhook URL",
-                    "type": "string",
-                    "required": true
+                    "type": "string"
                 },
                 {
                     "name": "secret",
@@ -536,6 +513,16 @@
                     "name": "active",
                     "viewName": "Active",
                     "type": "boolean"
+                },
+                {
+                    "name": "verify",
+                    "viewName": "Verify",
+                    "type": "boolean"
+                },
+                {
+                    "name": "delUnverified",
+                    "viewName": "Delete Unverified",
+                    "type": "boolean"
                 }
             ]
         },
@@ -548,8 +535,7 @@
                     "viewName": "Event Hook",
                     "type": "autocomplete",
                     "autocompleteType":"function",
-                    "functionName":"listEventHooks",
-                    "required": true
+                    "functionName":"listEventHooks"
                 },
                 {
                     "name":"action",
@@ -576,8 +562,7 @@
                             "id": "Delete",
                             "name": "Delete"
                         }
-                    ],
-                    "required": true
+                    ]
                 }
             ]
         }
