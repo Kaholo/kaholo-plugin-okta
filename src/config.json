@@ -516,12 +516,7 @@
                 },
                 {
                     "name": "verify",
-                    "viewName": "Verify",
-                    "type": "boolean"
-                },
-                {
-                    "name": "delUnverified",
-                    "viewName": "Delete Unverified",
+                    "viewName": "Require Verification",
                     "type": "boolean"
                 }
             ]

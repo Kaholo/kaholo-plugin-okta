@@ -57,7 +57,7 @@ async function createSamlApp(action, settings){
         }
         catch(err){
             await result.deactivate();
-            await result.delete;
+            await result.delete();
             throw err;
         }
     }
@@ -68,13 +68,13 @@ async function appAction(action, settings, overrideAction){
     const client = getClient(settings);
     const { action: actionType } = action.params;
     const apps = parsers.autocompleteOrArray(action.params.apps);
-    const promises = apps.map(app => {
+    const promises = apps.map(async (app) => {
         switch (overrideAction || actionType){
             case "Get":
                 return client.getApplication(app);
             case "Delete":
-                return  client.deactivateApplication(app).then(() =>
-                        client.deleteApplication(app));
+                await client.deactivateApplication(app);
+                return client.deleteApplication(app);
             case "Activate":
                 return client.activateApplication(app);
             case "Deactivate":
@@ -129,12 +129,15 @@ async function userAction(action, settings, overrideAction){
     const client = getClient(settings);
     const { action: actionType } = action.params;
     const users = parsers.autocompleteOrArray(action.params.users);
-    const promises = users.map(userId => {
+    const promises = users.map(async (userId) => {
         switch (overrideAction || actionType){
             case "Get":
                 return client.getUser(userId);
             case "Delete":
-                return client.getUser(userId).then(user => user.deactivate().then(() => user.delete()).then(() => ({msg: "user has been deleted", user})));
+                const user = await client.getUser(userId);
+                await user.deactivate();
+                await user.delete();
+                return {msg: "user has been deleted", user};
             case "Activate":
                 return client.activateUser(userId);
             case "Deactivate":
@@ -236,7 +239,7 @@ async function getSystemLogs(action, settings){
 
 async function createEventHook(action, settings){
     const client = getClient(settings);
-    const { url, active, name, delUnverified, verify } = action.params;
+    const { url, active, name, verify } = action.params;
     const req = {
         activate: parsers.boolean(active),
         name: parsers.string(name),
@@ -265,7 +268,7 @@ async function createEventHook(action, settings){
         return eventHookAction(action, settings, "Get");
     }
     catch (err){
-        if (delUnverified) await eventHookAction(action, settings, "Delete");
+        await eventHookAction(action, settings, "Delete");
         throw err;
     }
 }
@@ -278,8 +281,8 @@ async function eventHookAction(action, settings, overrideAction){
         case "Get":
             return client.getEventHook(eventHook);
         case "Delete":
-            return  client.deactivateEventHook(eventHook).then(()=>
-                    client.deleteEventHook(eventHook));
+            await client.deactivateEventHook(eventHook);
+            return client.deleteEventHook(eventHook);
         case "Verify":
             return client.verifyEventHook(eventHook);
         case "Activate":

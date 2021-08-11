@@ -109,8 +109,7 @@ Creates a new event hook for the specified webhook, and sends a new
 4. Secret (Vault) **Optional** - The value to attach as the token for the HTTP authorazation header in the requests sent to the webhook. If not specified, uses API token.
 5. HTTP Headers (Text/Object) **Optional** - If specified, attach the specified headers to requests sent to the webhook. Can be passed either as key=value pairs, each header seperated with a new line, or as an object from code.
 6. Active (Boolean) **Optional** - If specified, activate the new event hook.
-7. Verify (Boolean) **Optional** - If specified, also send a verify event hook request after creating the hook.
-8. Delete Unverified (Boolean) **Optional** - **Only relevant if checked 'Verify' Parameter.** If specified, and the event hook wasn't verified successfully, than delete the new event hook.
+7. Require Verification (Boolean) **Optional** - If specified, also send a verify event hook request after creating the hook, and delete the event hook in the event of failure.
 
 ## Method: Event Hook Action
 Runs the specified action on the specified event hook.
