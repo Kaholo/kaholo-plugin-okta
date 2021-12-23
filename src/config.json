@@ -5,8 +5,9 @@
     "main": "app.js",
     "exposeRoute": true,
     "imgUrl": "logo.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Integration with Okta API",
+    "category": "ACCESS MGMT",
     "settings": [
         {
             "name":"orgUrl",
